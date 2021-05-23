@@ -1,0 +1,149 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+
+    int data;
+    node*next;
+};
+node*newnode(int val)
+{
+    node*temp;
+    temp=(struct node*)malloc(sizeof(node));
+    temp->data=val;
+    temp->next=NULL;
+    return temp;
+}
+
+///////INSERT FUNCTION
+void inser(node*&head,int val)
+{
+    if(head==NULL)
+    {
+        head=newnode(val);
+        return;
+    }
+    node*temp;
+    temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode(val);
+    return;
+}
+
+
+
+
+/////////////////DISPLAY
+void display(node*&head)
+{
+    node*temp;
+temp=(struct node*)malloc(sizeof(node));
+temp=head;
+while(temp!=NULL)
+{
+    cout<<temp->data<<" ";
+    temp=temp->next;
+}
+return;
+}
+
+void rectify(node*&head)////////////////////REMOVE CYCLE IF PRESENT
+{
+                    node*fast;
+fast=(struct node*)malloc(sizeof(node));
+node*slow;
+slow=(struct node*)malloc(sizeof(node));
+fast=head;
+slow=head;
+while(fast!=NULL && fast->next!=NULL)
+{
+    slow=slow->next;
+    fast=fast->next->next;
+    if(slow==fast)
+    {
+        break;
+    }
+}
+fast=head;
+while(fast->next!=slow->next)
+{
+    fast=fast->next;
+    slow=slow->next;
+}
+slow->next=NULL;
+return;
+}
+////////////////////////////////////////////////
+///////////////////////////////////////////////
+bool detect(node*&head)///////////////////////////DETECT IF ANY CYCLE IS PRESENT
+{
+                node*fast;
+fast=(struct node*)malloc(sizeof(node));
+node*slow;
+slow=(struct node*)malloc(sizeof(node));
+fast=head;
+slow=head;
+while(fast!=NULL && fast->next!=NULL)
+{
+    slow=slow->next;
+    fast=fast->next->next;
+    if(slow==fast)
+    {
+        return true;
+    }
+}
+return false;
+}
+
+
+int main()
+{
+    node*head=NULL;
+    for(int i=0;i<=10;i++)///////////////TO INSERT 0-10
+    {
+        inser(head,i);
+    }
+    cout<<"OUR LINKED LIST: ";
+    display(head);
+
+    if(detect(head)==true)
+    {
+        cout<<"\nRING PRESENT \n RECTIFIED LINK LIST: ";
+    rectify(head);
+    display(head);
+    }
+    else
+    {
+        cout<<"\nRING NOT PRESENT";
+    }
+
+
+ //////////////////////////////////////TO CREATE A RING IN ANOTHER LINKED LIST 
+ node*newhead=NULL;
+ for(int i=0;i<=10;i++)///////////////TO INSERT 0-10
+    {
+        inser(newhead,i);
+    }
+
+    node*temp=newhead;
+    temp=temp->next->next;
+    node*temp1=newhead;
+
+    while(temp1->next!=NULL)
+        temp1=temp1->next;
+
+    temp1->next=temp;
+/////////////////////////WE WILL NOT DISPLAY OUR SECOND LINKED LIST AS INFINTE LOOP WILL START
+
+     if(detect(newhead)==true)
+     {
+         cout<<"\n \n RING PRESENT";
+    rectify(newhead);
+    cout<<"\n AFTER REMOVING RING: ";
+ display(newhead);
+     }
+    return 0;
+}
