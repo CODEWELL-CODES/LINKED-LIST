@@ -1,0 +1,124 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+
+    int data;
+    node*next;
+};
+node*newnode(int val)
+{
+    node*temp;
+    temp=(struct node*)malloc(sizeof(node));
+    temp->data=val;
+    temp->next=NULL;
+    return temp;
+}
+
+///////INSERT FUNCTION
+void inser(node*&head,int val)
+{
+    if(head==NULL)
+    {
+        head=newnode(val);
+        return;
+    }
+    node*temp;
+    temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode(val);
+    return;
+}
+
+
+
+
+/////////////////DISPLAY
+void display(node*&head)
+{
+    node*temp;
+temp=(struct node*)malloc(sizeof(node));
+temp=head;
+while(temp!=NULL)
+{
+    cout<<temp->data<<" ";
+    temp=temp->next;
+}
+return;
+}
+
+
+////////////////////MERGE 2 SORTED LINKED LIST
+node*merge_(node*head,node*newhead)
+{
+    node*temp=newnode(-1);
+    node*ptr;
+    node*ptr1;
+    node*ptr2;
+
+    ptr=temp;
+    ptr1=head;
+    ptr2=newhead;
+
+    while(ptr1!=NULL && ptr2!=NULL)
+    {
+        if(ptr1->data < ptr2->data)
+        {
+            ptr->next=ptr1;
+            ptr=ptr->next;
+            ptr1=ptr1->next;
+        }
+        else
+        {
+           ptr->next=ptr2;
+            ptr=ptr->next;
+            ptr2=ptr2->next;
+        }
+    }
+
+    while(ptr1!=NULL)
+    {
+        ptr->next=ptr1;
+        ptr1=ptr1->next;
+        ptr=ptr->next;
+    }
+
+    while(ptr2!=NULL)
+    {
+        ptr->next=ptr2;
+        ptr2=ptr2->next;
+        ptr=ptr->next;
+    }
+
+    return temp->next;
+
+}
+
+
+int main()
+{
+    node*head=NULL;
+    for(int i=0;i<=10;i+=2)///////////////TO INSERT 0-2-4-6-8-10
+    {
+        inser(head,i);
+    }
+    cout<<"OUR LINKED LIST: ";
+    display(head);
+
+node*newhead=NULL;
+for(int i=1;i<=10;i+=2)///////////////////////TO INSERT 1-3-5-7-9
+    inser(newhead,i);
+    cout<<"\n \n our 2nd linked list: ";
+    display(newhead);
+
+
+node*head3=merge_(head,newhead);
+cout<<"\n \n MERGED LINKED LIST: ";
+display(head3);
+
+
+    return 0;
+}
