@@ -1,0 +1,24 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+
+    int data;
+    node*next;
+};
+node*newnode(int val)
+{
+    node*temp;
+    temp=(struct node*)malloc(sizeof(node));
+    temp->data=val;
+    temp->next=NULL;
+    return temp;
+}
+int main()
+{
+    node*head=newnode(1);
+    node*temp2=newnode(2);
+    cout<<"DATA OF HEAD: "<<head->data<<endl;
+    cout<<"DATA OF temp2: "<<temp2->data<<endl;
+    return 0;
+}
