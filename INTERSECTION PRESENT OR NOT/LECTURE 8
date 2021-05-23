@@ -1,0 +1,142 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+
+    int data;
+    node*next;
+};
+node*newnode(int val)
+{
+    node*temp;
+    temp=(struct node*)malloc(sizeof(node));
+    temp->data=val;
+    temp->next=NULL;
+    return temp;
+}
+
+///////INSERT FUNCTION
+void inser(node*&head,int val)
+{
+    if(head==NULL)
+    {
+        head=newnode(val);
+        return;
+    }
+    node*temp;
+    temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode(val);
+    return;
+}
+
+int length(node*temp)/////////////TO COUNT LENGtH of LINK LIST
+{
+    int c=1;
+    while(temp!=NULL)
+    {
+        temp=temp->next;
+        c++;
+    }
+    return c;
+}
+
+
+/////////////////DISPLAY
+void display(node*&head)
+{
+    node*temp;
+temp=(struct node*)malloc(sizeof(node));
+temp=head;
+while(temp!=NULL)
+{
+    cout<<temp->data<<" ";
+    temp=temp->next;
+}
+return;
+}
+
+void check(node*head1,node*head2)//////////////////////TO CHECK IF INTERSECTION PRESENT OR NOT
+{
+    int L1=length(head1);
+    int L2=length(head2);
+
+    node*ptr1;
+    node*ptr2;
+
+    int d;
+    if(L1>L2)
+    {
+        ptr1=head1;
+        ptr2=head2;
+        d=L1-L2;
+    }
+    else
+    {
+        ptr1=head2;
+        ptr2=head1;
+        d=L2-L1;
+    }
+
+    for(int i=0;i<d;i++)
+        ptr1=ptr1->next;
+
+    while(ptr1->next!=NULL && ptr2->next!=NULL)
+    {
+        if(ptr1->next==ptr2->next)
+        {
+            cout<<"intersection present";
+            return;
+        }
+        ptr1=ptr1->next;
+        ptr2=ptr2->next;
+    }
+    cout<<"no intersection";
+    return;
+
+
+}
+
+int main()
+{
+////////////////////////////////////////////////////////////////////WITHOUT INtERSECTION
+    node*head=NULL;
+    for(int i=0;i<=10;i++)///////////////TO INSERT 0-10
+    {
+        inser(head,i);
+    }
+    cout<<"OUR FIRST LINKED LIST: ";
+    display(head);
+
+    node*newhead=NULL;
+    for(int i=0;i<=10;i++)
+    {
+        inser(newhead,i);
+    }
+    cout<<"\nOUR SECOND LINK LIST: ";
+    display(newhead);
+
+    cout<<"\n";
+    check(head,newhead);
+
+    ///////////////////////////////TO CREATE INTERSECTION AND THEN CHECKING
+
+    node*temp=newhead;
+    while(temp->next!=NULL)
+        temp=temp->next;
+
+    temp->next=head;///////////////////////////////connecting newhead last element with head
+    cout<<"\n \n \nFIRST LINKED LIST: ";
+    display(head);
+    cout<<"\n SECOND LINKED LIST: ";
+    display(newhead);
+    cout<<"\n";
+    check(head,newhead);
+
+
+
+    return 0;
+}
