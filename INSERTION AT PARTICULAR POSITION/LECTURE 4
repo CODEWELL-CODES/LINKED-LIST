@@ -1,0 +1,125 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+
+    int data;
+    node*next;
+};
+node*newnode(int val)
+{
+    node*temp;
+    temp=(struct node*)malloc(sizeof(node));
+    temp->data=val;
+    temp->next=NULL;
+    return temp;
+}
+
+///////INSERT FUNCTION
+void inser(node*&head,int val)
+{
+    if(head==NULL)
+    {
+        head=newnode(val);
+        return;
+    }
+    node*temp;
+    temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode(val);
+    return;
+}
+
+
+
+void insert_particular(node*&head)///////to insert at particular position
+{
+    int n;
+ cout<<" \n \nenter the no : ";
+ cin>>n;
+ int pos;
+ cout<<"\n enter the position: ";
+ cin>>pos;
+
+node*temp;
+
+node*curr;
+
+node*pre;
+
+temp=newnode(n);
+if(head==NULL && pos!=1)
+{
+    cout<<"CANNOT INSERT AT "<<pos<<" POSITION ";
+    return;
+}
+
+if(head!=NULL && pos==1)
+{
+    temp->next=head;
+    head=temp;
+    return;
+}
+
+  curr=head;
+  for(int i=1;i<pos;i++)
+  {
+      pre=curr;
+      curr=curr->next;
+  }
+  pre->next=temp;
+  temp->next=curr;
+
+return;
+
+}
+/////////////////DISPLAY
+void display(node*&head)
+{
+    node*temp;
+temp=(struct node*)malloc(sizeof(node));
+temp=head;
+while(temp!=NULL)
+{
+    cout<<temp->data<<" ";
+    temp=temp->next;
+}
+return;
+}
+/////////////////////TO DELETE
+
+void delet(node*&head)
+{
+    node*temp=head;
+    node*curr;
+    while(temp->next!=NULL)
+    {
+        curr=temp;
+        temp=temp->next;
+    }
+    curr->next=NULL;
+    return;
+}
+
+int main()
+{
+    node*head=NULL;
+    for(int i=0;i<=10;i++)///////////////TO INSERT 0-10
+    {
+        inser(head,i);
+    }
+    cout<<"OUR LINKED LIST: ";
+    display(head);
+
+    delet(head);
+    cout<<"\n \nAFTER DELETION: ";
+    display(head);
+    insert_particular(head);
+
+    cout<<"AFTER INSEERTION AT particular position: ";
+    display(head);
+    return 0;
+}
