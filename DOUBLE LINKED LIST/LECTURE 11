@@ -1,0 +1,77 @@
+#include<iostream>
+using namespace std;
+struct node{int data;
+            struct node*right,*left;
+            };
+node* newnode(int val)
+{
+    node*temp;
+    temp=(struct node*)malloc(sizeof(node));
+    temp->data=val;
+    temp->right=NULL;
+    temp->left=NULL;
+    return temp;
+}
+
+void inser(node*&head,int val)///////////TO PERFORM INSERTION
+{
+    if(head==NULL)
+    {
+        head=newnode(val);
+        return;
+    }
+    node*temp=head;
+    while(temp->right!=NULL)
+    {
+        temp=temp->right;
+    }
+    temp->right=newnode(val);
+    node*nxt=temp->right;
+    nxt->left=temp;
+    return;
+}
+
+void del(node*&head)////////////TO PERFORM DELETION
+{
+    if(head==NULL)
+    {
+        return;
+    }
+    node*curr=head;
+    node*pre;
+    while(curr->right!=NULL)
+    {
+        pre=curr;
+        curr=curr->right;
+    }
+    pre->right=NULL;
+    curr->left=NULL;
+    return;
+}
+
+void display(node*&head)///////////////////TO DISPLAY
+{
+    node*temp;
+temp=head;
+while(temp!=NULL)
+{
+    cout<<temp->data<<" ";
+    temp=temp->right;
+}
+return;
+}
+int main()
+{
+    node*head;
+    head=NULL;
+    for(int i=0;i<=10;i++)///////TO INSERT 0-10
+    {
+        inser(head,i);
+    }
+    cout<<"CURRENT LINKED LIST: ";
+    display(head);
+    del(head);
+    cout<<"\n \nLINKED LIST AFTER DELETION: ";
+    display(head);
+    return 0;
+}
