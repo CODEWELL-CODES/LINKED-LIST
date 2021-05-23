@@ -1,0 +1,91 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+
+    int data;
+    node*next;
+};
+node*newnode(int val)
+{
+    node*temp;
+    temp=(struct node*)malloc(sizeof(node));
+    temp->data=val;
+    temp->next=NULL;
+    return temp;
+}
+
+
+//////////////////////////////////////////////CHECKING
+void check(node*head,int k,int n)
+{
+    map<node*,int> mp;
+    node*temp=head;
+    while(1)
+    {
+
+        if(temp->data==n)
+        {
+            cout<<"\n YES";
+            return;
+        }
+        if(mp[temp]==1)
+        {
+            cout<<"\n NO";
+            return;
+        }
+        else
+        {
+            mp[temp]=1;
+        }
+        for(int i=0;i<k;i++)
+            temp=temp->next;
+    }
+    return;
+}
+
+
+///////INSERT FUNCTION
+void inser(node*&head,int val)
+{
+    if(head==NULL)
+    {
+        head=newnode(val);
+        return;
+    }
+    node*temp;
+    temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode(val);
+    return;
+}
+
+
+int main()
+{
+    int arr[11]={0,1,2,3,4,5,6,7,8,9};
+    node*head=NULL;
+    for(int i=0;i<10;i++)///////////////TO INSERT 0-9
+    {
+        inser(head,arr[i]);
+    }
+  ////////////////////////////////////////TO Create circular linked list
+node*temp;
+temp=head;
+while(temp->next!=NULL)
+    temp=temp->next;
+
+    temp->next=head;
+
+////////////////////////
+int k,n;
+cout<<"enter jumps and number to be find: ";
+cin>>k>>n;
+
+check(head,k,n);
+
+    return 0;
+}
