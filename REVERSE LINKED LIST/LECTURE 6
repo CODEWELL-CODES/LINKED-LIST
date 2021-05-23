@@ -1,0 +1,22 @@
+void rev(node*&head,node*&tail)////REVERSE A LINK LIST
+{
+    node*curr;
+curr=(struct node*)malloc(sizeof(node));
+node*pre;
+pre=(struct node*)malloc(sizeof(node));
+node*fut;
+fut=(struct node*)malloc(sizeof(node));
+pre=NULL;
+curr=head;
+while(curr!=NULL)
+{
+    fut=curr->next;
+    curr->next=pre;
+    pre=curr;
+    curr=fut;
+}
+tail=head;
+head=pre;
+tail->next=NULL;
+return;
+}
